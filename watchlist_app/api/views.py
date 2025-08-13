@@ -59,13 +59,13 @@ class StreamingPlatformListAV(APIView):
         else:
             return Response(serializer.errors)
         
-class StreaminPlatformDetailAV(APIView):
+class StreamingPlatformDetailAV(APIView):
     def get(self, request, pk):
         try:
             streamingPlatform = StreamingPlatform.objects.get(pk=pk)
         except StreamingPlatform.DoesNotExist:
             return Response({'Error': 'Streaming Platformn not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = StreamingPlatform(streamingPlatform)
+        serializer = StreamingPlatformSerializer(streamingPlatform)
         return Response(serializer.data)
     
     def put(self, request, pk):
