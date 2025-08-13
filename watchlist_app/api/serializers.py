@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from watchlist_app.models import Movie, StreamingPlatform
+from watchlist_app.models import WatchList, StreamingPlatform
 
 ###Watchlist Serializers###
 class WatchlistSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Movie
+        model = WatchList
         fields = '__all__'
 
 ###Streaming Platform Serializers###
