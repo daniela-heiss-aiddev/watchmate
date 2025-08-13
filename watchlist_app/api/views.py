@@ -1,8 +1,10 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from watchlist_app.api.serializers import WatchlistSerializer
-from watchlist_app.models import WatchList
+from watchlist_app.api.serializers import WatchlistSerializer, StreamingPlatformSerializer
+from watchlist_app.models import WatchList, StreamingPlatform
+
+###Watchlist###
 
 class WatchListAV(APIView):
     def get(self, request):
@@ -39,4 +41,43 @@ class WatchListDetailAV(APIView):
     def delete(self, request, pk):
         movie = WatchList.objects.get(pk=pk)
         movie.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+### Streaming Platform###
+
+class StreamingPlatformListAV(APIView):
+    def get(self, request):
+        streamingPlatforms = StreamingPlatform.objects.all()
+        serializer = StreamingPlatformSerializer(streamingPlatforms, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        serializer = StreamingPlatformSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+        
+class StreaminPlatformDetailAV(APIView):
+    def get(self, request, pk):
+        try:
+            streamingPlatform = StreamingPlatform.objects.get(pk=pk)
+        except StreamingPlatform.DoesNotExist:
+            return Response({'Error': 'Streaming Platformn not found'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = StreamingPlatform(streamingPlatform)
+        return Response(serializer.data)
+    
+    def put(self, request, pk):
+        streamingPlatform = StreamingPlatform.objects.get(pk=pk)
+        serializer = StreamingPlatformSerializer(streamingPlatform, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    def delete(self, request, pk):
+        streamingPlatform = StreamingPlatform.objects.get(pk=pk)
+        streamingPlatform.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
