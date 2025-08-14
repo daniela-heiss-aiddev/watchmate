@@ -8,7 +8,7 @@ class WatchlistSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 ###Streaming Platform Serializers###
-class StreamingPlatformSerializer(serializers.HyperlinkedModelSerializer):
+class StreamingPlatformSerializer(serializers.ModelSerializer):
     watchlist = WatchlistSerializer(many=True, read_only=True)
     #watchlist = serializers.StringRelatedField(many=True)
     #watchlist = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
