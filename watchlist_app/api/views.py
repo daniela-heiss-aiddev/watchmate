@@ -65,7 +65,7 @@ class StreamingPlatformDetailAV(APIView):
             streamingPlatform = StreamingPlatform.objects.get(pk=pk)
         except StreamingPlatform.DoesNotExist:
             return Response({'Error': 'Streaming Platformn not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = StreamingPlatformSerializer(streamingPlatform)
+        serializer = StreamingPlatformSerializer(streamingPlatform, context={'request': request})   #request for hyperlinked serializer
         return Response(serializer.data)
     
     def put(self, request, pk):
