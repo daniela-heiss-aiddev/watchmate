@@ -7,6 +7,6 @@ urlpatterns = [
     path('list/', WatchListAV.as_view(), name='movie-list'),
     path('<int:pk>', WatchListDetailAV.as_view(), name='movie-list-details'),
     ###Streaming Platform API URLs###
-    path('stream/', StreamingPlatformListAV.as_view(), name='streaming-platform-list'),
-    path('stream/<int:pk>', StreamingPlatformDetailAV.as_view(), name='streaming-platform-details'),
+    path('stream/', StreamingPlatformListAV.as_view(), name='streamingplatform-list'),
+    path('stream/<int:pk>', StreamingPlatformDetailAV.as_view(), name='streamingplatform-detail'),
 ]

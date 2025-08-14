@@ -48,7 +48,7 @@ class WatchListDetailAV(APIView):
 class StreamingPlatformListAV(APIView):
     def get(self, request):
         streamingPlatforms = StreamingPlatform.objects.all()
-        serializer = StreamingPlatformSerializer(streamingPlatforms, many=True)
+        serializer = StreamingPlatformSerializer(streamingPlatforms, many=True, context={'request': request})
         return Response(serializer.data)
     
     def post(self, request):
