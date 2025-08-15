@@ -1,11 +1,29 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from watchlist_app.api.serializers import WatchlistSerializer, StreamingPlatformSerializer
-from watchlist_app.models import WatchList, StreamingPlatform
+from rest_framework import mixins
+from rest_framework import generics
+from watchlist_app.api.serializers import WatchlistSerializer, StreamingPlatformSerializer, ReviewSerializer
+from watchlist_app.models import WatchList, StreamingPlatform, Review
+
+class ReviewDetail(mixins.RetrieveModelMixin, generics.GenericAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+class ReviewList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 ###Watchlist###
-
 class WatchListAV(APIView):
     def get(self, request):
         movies = WatchList.objects.all()
@@ -65,7 +83,7 @@ class StreamingPlatformDetailAV(APIView):
             streamingPlatform = StreamingPlatform.objects.get(pk=pk)
         except StreamingPlatform.DoesNotExist:
             return Response({'Error': 'Streaming Platformn not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = StreamingPlatformSerializer(streamingPlatform, context={'request': request})   #request for hyperlinked serializer
+        serializer = StreamingPlatformSerializer(streamingPlatform, context={'request': request})   #request for hyperlinked serializer*
         return Response(serializer.data)
     
     def put(self, request, pk):
