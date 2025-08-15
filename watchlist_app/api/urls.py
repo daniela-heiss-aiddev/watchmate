@@ -9,6 +9,7 @@ urlpatterns = [
     ###Streaming Platform API URLs###
     path('stream/', StreamingPlatformListAV.as_view(), name='streamingplatform-list'),
     path('stream/<int:pk>', StreamingPlatformDetailAV.as_view(), name='streamingplatform-detail'),
-    path('review/', ReviewList.as_view(), name='review-list'),
-    path('review/<int:pk>', ReviewDetail.as_view(), name='review-detail'),
+
+    path('stream/<int:pk>/review/', ReviewList.as_view(), name='review-list'),
+    path('stream/review/<int:pk>', ReviewDetail.as_view(), name='review-detail'),
 ]
