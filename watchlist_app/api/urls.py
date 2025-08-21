@@ -5,13 +5,13 @@ from watchlist_app.api.views import WatchListAV, WatchListDetailAV, StreamingPla
 urlpatterns = [
     ###Watchlist API URLs###
     path('list/', WatchListAV.as_view(), name='movie-list'),
-    path('<int:pk>', WatchListDetailAV.as_view(), name='movie-list-details'),
+    path('<int:pk/>', WatchListDetailAV.as_view(), name='movie-list-details'),
     ###Streaming Platform API URLs###
     path('stream/', StreamingPlatformListAV.as_view(), name='streamingplatform-list'),
-    path('stream/<int:pk>', StreamingPlatformDetailAV.as_view(), name='streamingplatform-detail'),
+    path('stream/<int:pk>/', StreamingPlatformDetailAV.as_view(), name='streamingplatform-detail'),
 
-    path('stream/<int:pk>/review-create/', ReviewCreate.as_view(), name='review-create'),
+    path('<int:pk>/review-create/', ReviewCreate.as_view(), name='review-create'),
 
-    path('stream/<int:pk>/review/', ReviewList.as_view(), name='review-list'),
-    path('stream/review/<int:pk>', ReviewDetail.as_view(), name='review-detail'),
+    path('<int:pk>/review/', ReviewList.as_view(), name='review-list'),
+    path('review/<int:pk>/', ReviewDetail.as_view(), name='review-detail'),
 ]
